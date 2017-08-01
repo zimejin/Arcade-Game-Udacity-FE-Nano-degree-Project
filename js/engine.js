@@ -1,18 +1,5 @@
-/* Engine.js
- * This file provides the game loop functionality (update entities and render),
- * draws the initial game board on the screen, and then calls the update and
- * render methods on your player and enemy objects (defined in your app.js).
- *
- * A game engine works by drawing the entire game screen over and over, kind of
- * like a flipbook you may have created as a kid. When your player moves across
- * the screen, it may look like just that image/character is moving or being
- * drawn but that is not the case. What's really happening is the entire "scene"
- * is being drawn over and over, presenting the illusion of animation.
- *
- * This engine is available globally via the Engine variable and it also makes
- * the canvas' context (ctx) object globally available to make writing app.js
- * a little simpler to work with.
- */
+// Building Our Game Engine
+
 var Engine = (function(global) {
 	var doc = global.document,
 		win = global.window,
@@ -39,8 +26,8 @@ var Engine = (function(global) {
 	}
 
 	function update(dt) {
-        updateEntities(dt);
-        checkCollisions()
+		updateEntities(dt);
+		checkCollisions()
 	}
 
 	function updateEntities(dt) {
@@ -56,37 +43,40 @@ var Engine = (function(global) {
 		this.bottom = this.top + height;
 		this.width = width;
 		this.height = height;
-    };
+	};
 
-    function checkCollisions() {
-        var playerRect = new Rectangle(player.x + 28, player.y + 124, 44, 47);
-        obstacles.forEach(function(obstacle) {
-            var obstacleRect = new Rectangle(obstacle.x + 28, obstacle.y + 124, 44, 47);
-            if (doRectanglesIntersect(obstacleRect, playerRect)){
-                console.log("Player collided with an obstacle!");
-                player.x = player.previousLocation.x;
-                player.y = player.previousLocation.y;
-            }
-    });
-        allEnemies.forEach(function (bug){
-			var bugRect = new Rectangle(bug.x + 28, bug.y + 124, 44, 47);
-			if(doRectanglesIntersect(bugRect, playerRect)){
-			console.log("Player collided with a bug")
-		}
-		obstacles.forEach(function(obstacle){
+	function checkCollisions() {
+		var playerRect = new Rectangle(player.x + 28, player.y + 124, 44, 47);
+		obstacles.forEach(function(obstacle) {
 			var obstacleRect = new Rectangle(obstacle.x + 28, obstacle.y + 124, 44, 47);
-			if (doRectanglesIntersect(bugRect, obstacleRect)){
-				console.log("Bug collided with an obstacle")
+			if (doRectanglesIntersect(obstacleRect, playerRect)) {
+				player.x = player.previousLocation.x;
+				player.y = player.previousLocation.y;
 			}
-		})	
-	})
-}
-
-// Checks to see if rectangle variables intersect. Parameters: rectangle 1 and rectangle 2
-function doRectanglesIntersect(r1, r2) {
-        return !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top);
-    }  
-
+		});
+		allEnemies.forEach(function(bug) {
+			var bugRect = new Rectangle(bug.x + 28, bug.y + 124, 44, 47);
+			if (doRectanglesIntersect(bugRect, playerRect)) {
+				console.log("Bug collided with player")
+			}
+			obstacles.forEach(function(obstacle) {
+				var obstacleRect = new Rectangle(obstacle.x + 28, obstacle.y + 124, 44, 47);
+				if (doRectanglesIntersect(bugRect, obstacleRect)) {
+					console.log(bug.x)
+					if(bug.sprite == bug.reverse) {
+						bug.sprite = bug.forward;
+					} else{
+						bug.sprite = bug.reverse;
+					}
+					bug.direction *= -1;
+				}
+			})
+		})
+	}
+	// Checks to see if rectangle variables intersect. Parameters: rectangle 1 and rectangle 2
+	function doRectanglesIntersect(r1, r2) {
+		return !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top);
+	}
 	var IMPASSABLE = 0,
 		PASSABLE = 1,
 		ITEM = 2,
@@ -122,6 +112,10 @@ function doRectanglesIntersect(r1, r2) {
 		// IMPASSABLE tiles the character and bugs cannot walk on
 		Water = {
 			sprite: 'images/Dark Water Block.png',
+			type: IMPASSABLE
+		},
+		Ice = {
+			sprite: 'images/water-block.png',
 			type: IMPASSABLE
 		},
 		Door = {
@@ -202,28 +196,19 @@ function doRectanglesIntersect(r1, r2) {
 	var obstacles = [
 		new Tile(Rock, 0, 90),
 		new Tile(Bush, 0, 170),
-		new Tile(Water, 0,280),
-		new Tile(Water, 900,0),
-		new Tile(Water, 800,0),
-		new Tile(Water, 700,0),
-		new Tile(Water, 200,0),
-		new Tile(Water, 100,0),
-		new Tile(Water, 0,0),
 		new Tile(Tree, 0, 400),
 		new Tile(Bush, 0, 500),
 		new Tile(Rock, 0, 578),
 		new Tile(Rock, 0, 740),
 		new Tile(Tree, 0, 820),
 		new Tile(Bush, 0, 655),
-		new Tile(Block, 908, 840),
 		new Tile(Bush, 908, 730),
 		new Tile(Tree, 908, 340),
 		new Tile(Tree, 908, 170),
 		new Tile(Rock, 908, 580),
 		new Tile(Bush, 908, 500),
-		new Tile(Rock, 908, 400),	
-		new Tile(Tree, 200, 340)
-    ];
+		new Tile(Rock, 908, 400),
+	];
 	var items = [
 		new Tile(Key, 135, 500),
 		new Tile(Green_Gem, 730, 485)
@@ -274,7 +259,7 @@ function doRectanglesIntersect(r1, r2) {
 	}
 
 	function reset() {}
-	Resources.load(['images/Dark Water Block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
+	Resources.load(["images/enemy-bug-purple-reversed.png","images/enemy-bug-green-reversed.png",'images/enemy-bug-blue-reversed.png','images/Dark Water Block.png', 'images/water-block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
 	Resources.onReady(init);
 	global.ctx = ctx;
 })(this);
