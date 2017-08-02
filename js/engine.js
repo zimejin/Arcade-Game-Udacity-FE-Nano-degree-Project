@@ -1,4 +1,6 @@
 // Building Our Game Engine
+var POSSIBLE_Y = [ 280, 360, 440, 520, 600, 680,];
+var POSSIBLE_X = [ 300, 400, 500, 600, 368, 680];
 
 var Engine = (function(global) {
 	var doc = global.document,
@@ -56,13 +58,14 @@ var Engine = (function(global) {
 		});
 		allEnemies.forEach(function(bug) {
 			var bugRect = new Rectangle(bug.x + 28, bug.y + 124, 44, 47);
-			if (doRectanglesIntersect(bugRect, playerRect)) {
-				console.log("Bug collided with player")
-			}
+			 if (doRectanglesIntersect(bugRect, playerRect)) {
+                player.x = 400;
+                player.y = 800;
+                console.log("Player collided with a bug!");
+            }
 			obstacles.forEach(function(obstacle) {
 				var obstacleRect = new Rectangle(obstacle.x + 28, obstacle.y + 124, 44, 47);
 				if (doRectanglesIntersect(bugRect, obstacleRect)) {
-					console.log(bug.x)
 					if(bug.sprite == bug.reverse) {
 						bug.sprite = bug.forward;
 					} else{
@@ -194,7 +197,7 @@ var Engine = (function(global) {
 		}
 	}
 	var obstacles = [
-		new Tile(Rock, 0, 90),
+		new Tile(Rock, 0, 250),
 		new Tile(Bush, 0, 170),
 		new Tile(Tree, 0, 400),
 		new Tile(Bush, 0, 500),
@@ -208,10 +211,11 @@ var Engine = (function(global) {
 		new Tile(Rock, 908, 580),
 		new Tile(Bush, 908, 500),
 		new Tile(Rock, 908, 400),
+		new Tile(Rock, 908, 250),
 	];
 	var items = [
-		new Tile(Key, 135, 500),
-		new Tile(Green_Gem, 730, 485)
+		new Tile(Key, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)]),
+		new Tile(Green_Gem, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)])
 	];
 	obstacles.push(new Tile(Door, 505, 80));
 	obstacles.push(new Tile(Door, 405, 80));
@@ -248,6 +252,11 @@ var Engine = (function(global) {
 			buildingPiece = building[index];
 			ctx.drawImage(Resources.get(buildingPiece.tileInfo.sprite), buildingPiece.x, buildingPiece.y);
 		}
+		 /*Items in Level 1*/
+        for (index = 0; index < items.length; index++) {
+            item = items[index];
+            ctx.drawImage(Resources.get(item.tileInfo.sprite), item.x, item.y);
+        }
 		renderEntities()
 	}
 
@@ -259,7 +268,7 @@ var Engine = (function(global) {
 	}
 
 	function reset() {}
-	Resources.load(["images/enemy-bug-purple-reversed.png","images/enemy-bug-green-reversed.png",'images/enemy-bug-blue-reversed.png','images/Dark Water Block.png', 'images/water-block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
+	Resources.load(['images/char-boy-left.png','images/char-boy-up.png','images/char-boy-right.png',"images/enemy-bug-purple-reversed.png","images/enemy-bug-green-reversed.png",'images/enemy-bug-blue-reversed.png','images/Dark Water Block.png', 'images/water-block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
 	Resources.onReady(init);
 	global.ctx = ctx;
 })(this);

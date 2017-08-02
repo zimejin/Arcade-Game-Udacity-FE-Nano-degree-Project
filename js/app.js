@@ -51,17 +51,22 @@ Player.prototype.handleInput = function(direction) {
 	this.previousLocation.y = this.y;
 	if (direction === 'left' && this.x > 100) {
 		this.x -= 100;
+		this.sprite = 'images/char-boy-left.png';
 	}
 	if (direction === 'up' && this.y > 100) {
 		this.y -= 80;
+		this.sprite = 'images/char-boy-up.png';
 	}
 	if (direction === 'right' && this.x > -100 && this.x < 800) {
 		this.x += 100;
+		this.sprite = 'images/char-boy-right.png';
 	}
 	if (direction === 'down' && this.y > 0 && this.y < 750) {
 		this.y += 80;
+		this.sprite = 'images/Character Boy.png';
 	}
 };
+
 document.addEventListener('keyup', function(e) {
 	var allowedKeys = {
 		37: 'left',
