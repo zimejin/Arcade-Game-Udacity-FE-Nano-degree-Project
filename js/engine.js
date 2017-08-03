@@ -1,6 +1,10 @@
 // Building Our Game Engine
-var POSSIBLE_Y = [ 280, 360, 440, 520, 600, 680,];
-var POSSIBLE_X = [ 300, 400, 500, 600, 368, 680];
+// Game Properties
+var POSSIBLE_Y = [ 300, 400, 500, 600, 700, 800,];
+var POSSIBLE_X = [ 300, 400, 500, 600, 700, 800];
+var enemyCollision = new Audio('sounds/crunch.wav');
+var collect = new Audio('sounds/ding.mp3');
+var soundtrack = new Audio('sounds/Hyrule-Field-Main-Theme.mp3');
 
 var Engine = (function(global) {
 	var doc = global.document,
@@ -25,6 +29,7 @@ var Engine = (function(global) {
 		reset();
 		lastTime = Date.now();
 		main();
+		soundtrack.play()
 	}
 
 	function update(dt) {
@@ -60,8 +65,8 @@ var Engine = (function(global) {
 			var bugRect = new Rectangle(bug.x + 28, bug.y + 124, 44, 47);
 			 if (doRectanglesIntersect(bugRect, playerRect)) {
                 player.x = 400;
-                player.y = 800;
-                console.log("Player collided with a bug!");
+				player.y = 800;
+				enemyCollision.play();
             }
 			obstacles.forEach(function(obstacle) {
 				var obstacleRect = new Rectangle(obstacle.x + 28, obstacle.y + 124, 44, 47);
@@ -75,6 +80,15 @@ var Engine = (function(global) {
 				}
 			})
 		})
+		items.forEach(function(item){
+			var itemRect = new Rectangle(item.x, item.y, 44, 47);
+			if (doRectanglesIntersect(itemRect, playerRect)) {
+				console.log("Player picked up an item!");
+				item.x = POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], 
+				item.y = POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)],
+				collect.play();
+            }
+		})
 	}
 	// Checks to see if rectangle variables intersect. Parameters: rectangle 1 and rectangle 2
 	function doRectanglesIntersect(r1, r2) {
@@ -85,6 +99,10 @@ var Engine = (function(global) {
 		ITEM = 2,
 		Key = {
 			sprite: 'images/Key.png',
+			type: ITEM
+		},
+		Keybig = {
+			sprite: 'images/Big Key.png',
 			type: ITEM
 		},
 		Green_Gem = {
@@ -161,6 +179,10 @@ var Engine = (function(global) {
 			sprite: 'images/Stone Block.png',
 			type: IMPASSABLE
 		},
+		Orange = {
+			sprite: 'images/gem-orange.png',
+			type: IMPASSABLE
+		},
 		numRows,
 		numCols,
 		col,
@@ -176,6 +198,7 @@ var Engine = (function(global) {
 	};
 	/*LEVEL 1*/
 	var baseLayer = [
+		[new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water), new Tile(Water)],
 		[new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass)],
 		[new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass)],
 		[new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass), new Tile(Grass)],
@@ -212,10 +235,17 @@ var Engine = (function(global) {
 		new Tile(Bush, 908, 500),
 		new Tile(Rock, 908, 400),
 		new Tile(Rock, 908, 250),
+		new Tile(Bush, 302, 660),
+        new Tile(Rock, 402, 650),
+        new Tile(Bush, 502, 670),
+		new Tile(Rock, 502, 570),
+		new Tile(Rock, 202, 340),
+        new Tile(Tree, 303, 400)
 	];
 	var items = [
-		new Tile(Key, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)]),
-		new Tile(Green_Gem, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)])
+		new Tile(Keybig, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)]),
+		new Tile(Green_Gem, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)]),
+		new Tile(Orange, POSSIBLE_X[Math.floor(Math.random() * POSSIBLE_X.length)], POSSIBLE_Y[Math.floor(Math.random() * POSSIBLE_Y.length)])
 	];
 	obstacles.push(new Tile(Door, 505, 80));
 	obstacles.push(new Tile(Door, 405, 80));
@@ -268,7 +298,7 @@ var Engine = (function(global) {
 	}
 
 	function reset() {}
-	Resources.load(['images/char-boy-left.png','images/char-boy-up.png','images/char-boy-right.png',"images/enemy-bug-purple-reversed.png","images/enemy-bug-green-reversed.png",'images/enemy-bug-blue-reversed.png','images/Dark Water Block.png', 'images/water-block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
+	Resources.load(['images/gem-orange.png','images/char-boy-left.png','images/Big Key.png','images/char-boy-up.png','images/char-boy-right.png',"images/enemy-bug-purple-reversed.png","images/enemy-bug-green-reversed.png",'images/enemy-bug-blue-reversed.png','images/Dark Water Block.png', 'images/water-block.png', 'images/Rock.png', 'images/tall-tree.png', 'images/Bush.png', 'images/Grass Block.png', 'images/Bush.png', 'images/Key.png', 'images/Small Green Gem.png', 'images/Door.png', 'images/Statue.png', 'images/Wall Block Tall.png', 'images/Roof South West.png', 'images/Roof South East.png', 'images/Roof South.png', 'images/Wood Block.png', 'images/Wood Block2.png', 'images/Stone Block.png', 'images/Plain Block.png', 'images/Character Boy.png', 'images/RightEnemyBug.png', 'images/LeftEnemyBug.png', 'images/enemy-bug-blue.png', 'images/enemy-bug-green.png', 'images/enemy-bug-purple.png']);
 	Resources.onReady(init);
 	global.ctx = ctx;
 })(this);
