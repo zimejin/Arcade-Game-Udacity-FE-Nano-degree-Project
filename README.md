@@ -17,7 +17,7 @@ randomly.
 
 * You must get all Keys to Finish the Game. Have Fun Playing.
 
-![Image](https://github.com/zimejin/Udacity-Project-5-Neighbourhood-Map-Project-/blob/master/screenshot.png?raw=true)
+![Image](https://github.com/zimejin/Arcade-Game-Udacity-FE-Nano-degree-Project/edit/master/screenshot.png?raw=true)
 
 
 References
