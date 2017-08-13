@@ -19,6 +19,8 @@ randomly.
 
 ![Image](https://github.com/zimejin/Arcade-Game-Udacity-FE-Nano-degree-Project/blob/master/screenshot.png?raw=true)
 
+LIVE PREVIEW:-  https://zimejin.github.io/Arcade-Game-Udacity-FE-Nano-degree-Project/
+
 
 References
 -----------------
