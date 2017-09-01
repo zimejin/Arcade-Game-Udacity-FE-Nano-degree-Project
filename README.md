@@ -1,3 +1,5 @@
+LIVE PREVIEW:-  https://zimejin.github.io/Arcade-Game-Udacity-FE-Nano-degree-Project/
+
 frontend-nanodegree-arcade-game
 ===============================
 * Navigate to your local copy of index.html through your web browser
@@ -18,9 +20,6 @@ randomly.
 * You must get all Keys to Finish the Game. Have Fun Playing.
 
 ![Image](https://github.com/zimejin/Arcade-Game-Udacity-FE-Nano-degree-Project/blob/master/screenshot.png?raw=true)
-
-LIVE PREVIEW:-  https://zimejin.github.io/Arcade-Game-Udacity-FE-Nano-degree-Project/
-
 
 References
 -----------------
