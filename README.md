@@ -2,20 +2,19 @@ LIVE PREVIEW:-  https://zimejin.github.io/Online-2D-Scroller-Udacity-FE-Nano-deg
 
 About
 =====
-The Scope for this game was to create a 2D scroller using JavaScript. I've iterated on the original idea, to execute 
-the best parts. This was also a project done in submision to Udacity as part of my project requirements. It was challenging 
-and required a good amount of JavaScript and prototypical inheritance. 
+The Scope for this game was to create a 2D scroller using JavaScript. I've iterated on the original project which was much simpler, And added some custom features. 
+This was also a project done in submision to Udacity as part of my project requirements. 
 
 A game engine was provided but I modified it to add additional functionality to the application. Such as a collision detection
 system for when players hit an obstacle. 
 
-frontend-nanodegree-arcade-game
+How To Play
 ===============================
 * Navigate to your local copy of index.html through your web browser
 
 * You control the player character with the arrow keys and can move up, down, left or right
 
-* Player must move across the board while avoiding enemy bugs
+* Player must move across the board while avoiding enemy bugs.
 
 ![Image](https://github.com/zimejin/Arcade-Game-Udacity-FE-Nano-degree-Project/blob/master/screenshot.png?raw=true)
 
