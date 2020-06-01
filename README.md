@@ -2,7 +2,7 @@ LIVE PREVIEW:-  https://zimejin.github.io/Online-2D-Scroller-Udacity-FE-Nano-deg
 
 About
 =====
-The Scope for this game was to create a 2D scroller using JavaScript. I've iterated on the original project which was much simpler, And added some custom features. 
+The Scope for this game was to create a 2D scroller using JavaScript. I've iterated on the source material which was much simpler, And added some new features. 
 This was also a project done in submision to Udacity as part of my project requirements. 
 
 A game engine was provided but I modified it to add additional functionality to the application. Such as a collision detection
