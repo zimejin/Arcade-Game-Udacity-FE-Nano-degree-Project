@@ -6,7 +6,7 @@ The Scope for this game was to create a 2D scroller using JavaScript. I've itera
 This was also a project done in submision to Udacity as part of my project requirements. 
 
 A game engine was provided but I modified it to add additional functionality to the application. Such as a collision detection
-system for when players hit an obstacle. 
+system. 
 
 How To Play
 ===============================
