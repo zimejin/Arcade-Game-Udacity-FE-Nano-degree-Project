@@ -1,4 +1,4 @@
-LIVE PREVIEW:-  https://zimejin.github.io/Online-2D-Scroller-Udacity-FE-Nano-degree-Project/
+LIVE PREVIEW:-  https://zimejin.github.io/Online-2D-Scroller/
 
 About
 =====
